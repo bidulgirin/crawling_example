@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>크롤링자동화PJ</title>
+</head>
+
+<body>
+    <form method="GET" action="{% url 'crawling' %}">
+        <h1>찾을 class와 태그를 입력하세요</h1>
+        <p>
+            빈값으로 입력하면 태그에 "div" 가 들어갑니다
+        </p>
+        <div>
+            <label for="">url</label>
+            <input type="text" name="url" placeholder="url" required>
+        </div>
+        <div>
+            <label for="">제목</label>
+            <input type="text" name="title_tag" placeholder="">
+            <input type="text" name="title" placeholder="제목" required>
+
+        </div>
+        <div>
+            <label for="">콘텐츠</label>
+            <input type="text" name="content_tag">
+            <input type="text" name="content" placeholder="콘텐츠">
+        </div>
+
+        <div>
+            <label for="">기자</label>
+            <input type="text" name="author_tag">
+            <input type="text" name="author" placeholder="기자">
+        </div>
+
+        <button type="submit">찾아!!!!</button>
+
+    </form>
+
+    <div>
+        <h2>수집한 데이터</h2>
+        <a href="">모두삭제</a>
+        {% for data in datas %}
+        <table border="0">
+            <tr>
+                <td>id</td>
+                <td>{{data.id}}</td>
+                <td>제목:</td>
+                <td>{{data.title}}</td>
+                <td>설명:</td>
+                <td>{{data.content}}</td>
+                <td>저자:</td>
+                <td>{{data.author}}</td>
+                <td>
+                    <form action="POST">
+                        {% csrf_token %}
+                        <a href="">삭제</a>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        {% empty %}
+        <p>데이터가 없습니다</p>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
