@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>크롤링자동화PJ</title>
 </head>
+<style>
+    .g_table {
+        width: 50%;
+        max-width: 800px;
+        border: 1px solid black;
+    }
+
+    .g_table tr {
+        border-bottom: 1px solid #ede;
+    }
+</style>
 
 <body>
     <form method="GET" action="{% url 'crawling' %}">
@@ -41,29 +52,42 @@
 
     <div>
         <h2>수집한 데이터</h2>
-        <a href="">모두삭제</a>
-        {% for data in datas %}
-        <table border="0">
-            <tr>
-                <td>id</td>
-                <td>{{data.id}}</td>
-                <td>제목:</td>
-                <td>{{data.title}}</td>
-                <td>설명:</td>
-                <td>{{data.content}}</td>
-                <td>저자:</td>
-                <td>{{data.author}}</td>
-                <td>
-                    <form action="POST">
-                        {% csrf_token %}
-                        <a href="">삭제</a>
-                    </form>
-                </td>
-            </tr>
-        </table>
-        {% empty %}
-        <p>데이터가 없습니다</p>
-        {% endfor %}
+        <form action="{% url 'delete_data'%}" method="POST">
+            {% csrf_token %}
+            <button id="all_checkbox" type="submit">삭제</button>
+            <table class="g_table">
+                <thead>
+                    <th>
+                    <td>선택</td>
+                    <td>id</td>
+                    <td>제목</td>
+                    <td>설명</td>
+                    <td>저자</td>
+                    </th>
+                </thead>
+                <tbody>
+                    {% for data in datas %}
+                    <tr>
+                        <td>
+                            <input id="d-{{data.id}}" type="checkbox" value="{{data.id}}" name="pk">
+                        </td>
+                        <td>{{data.id}}</td>
+                        <td>{{data.title|truncatechars:"10"|default:"-"}}</td>
+                        <td>{{data.content|truncatechars:"10"|default:"-"}}</td>
+                        <td>{{data.author|default:"-"}}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">
+                            <p>데이터가 없습니다</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+
+
     </div>
 </body>
 
