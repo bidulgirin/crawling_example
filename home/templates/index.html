@@ -21,29 +21,59 @@
 <body>
     <form method="GET" action="{% url 'crawling' %}">
         <h1>찾을 class와 태그를 입력하세요</h1>
-        <p>
-            빈값으로 입력하면 태그에 "div" 가 들어갑니다
-        </p>
+        <p>현재는 클래스로만 찾을수있습니다.</p>
+
         <div>
             <label for="">url</label>
             <input type="text" name="url" placeholder="url" required>
         </div>
         <div>
+            <p>클릭할 요소 (a태그 href 요소)</p>
+            <input type="text" name="click[]"> <button class="click_add">추가</button>
+        </div>
+        <div>
+            <p>검색할 요소</p>
+            <input type="text" name="search_input" placeholder="검색창 class">
+            <input type="text" name="serach_word" placeholder="검색단어">
+        </div>
+        <div>
+            <p>화면 스크롤(무한스크롤이 있을경우에)</p>
+            <input type="text" name="scroll_px" placeholder="px">
+        </div>
+        <div>
             <label for="">제목</label>
-            <input type="text" name="title_tag" placeholder="">
-            <input type="text" name="title" placeholder="제목" required>
+            <select name="title_tag" id="">
+                <option value="1" selected>div</option>
+                <option value="2">article</option>
+                <option value="3">section</option>
+                <option value="4">p</option>
+                <option value="5">a</option>
+            </select>
+            <input type="text" name="title" placeholder="제목 클래스이름" required>
 
         </div>
         <div>
             <label for="">콘텐츠</label>
-            <input type="text" name="content_tag">
-            <input type="text" name="content" placeholder="콘텐츠">
+            <select name="content_tag" id="">
+                <option value="1" selected>div</option>
+                <option value="2">article</option>
+                <option value="3">section</option>
+                <option value="4">p</option>
+                <option value="5">a</option>
+            </select>
+            <input type="text" name="content" placeholder="콘텐츠 클래스이름">
         </div>
 
         <div>
             <label for="">기자</label>
-            <input type="text" name="author_tag">
-            <input type="text" name="author" placeholder="기자">
+            <select name="author_tag" id="author_tag">
+                <option value="1" selected>div</option>
+                <option value="2">article</option>
+                <option value="3">section</option>
+                <option value="4">p</option>
+                <option value="5">a</option>
+            </select>
+            <input type="text" name="author" placeholder="기자 클래스이름">
         </div>
 
         <button type="submit">찾아!!!!</button>
@@ -54,11 +84,11 @@
         <h2>수집한 데이터</h2>
         <form action="{% url 'delete_data'%}" method="POST">
             {% csrf_token %}
+            <button id="" type="button">모두선택</button>
             <button id="all_checkbox" type="submit">삭제</button>
             <table class="g_table">
                 <thead>
                     <th>
-                    <td>선택</td>
                     <td>id</td>
                     <td>제목</td>
                     <td>설명</td>

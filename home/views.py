@@ -40,16 +40,18 @@ def crawling(request):
                 soup = BeautifulSoup(response.content, 'html.parser')  # 응답 받은 HTML 파싱
                 # 지금은 클래스로만 찾아요
                 titles = soup.select(f'.{title_name}')
-                print("GET데이터들")
-                print(titles)
-                # 일단 print로 찍어 봅시다.
+                contents = soup.select(f'.{content_name}')
+                authors = soup.select(f'.{author_name}')
                 
                 # 여기서 알고리즘 연습의 중요성을 느낍니다...
+                data_length = len(titles)
+                print("data_length")
+                print(data_length)
                 newData = []
-                for t in titles:
-                    newData.append(NewData(title = t.get_text(),
-                                           author = "",
-                                           content = "",
+                for idx in range(data_length):
+                    newData.append(NewData(title = titles[idx].get_text(),
+                                           content = contents[idx].get_text(),
+                                           author = authors[idx].get_text(),
                                            ))
                 if newData:
                     # 여러개의 데이터값을..넣으려고...해봤다...
