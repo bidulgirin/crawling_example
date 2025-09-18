@@ -21,7 +21,7 @@
 <body>
     <form method="GET" action="{% url 'crawling' %}">
         <h1>찾을 class와 태그를 입력하세요</h1>
-        <p>현재는 클래스로만 찾을수있습니다.</p>
+        <p>현재는 클래스 이름으로만 찾을수있습니다.</p>
 
         <div>
             <label for="">url</label>
@@ -42,7 +42,7 @@
         </div>
         <div>
             <label for="">제목</label>
-            <select name="title_tag" id="">
+            <select name="title_tag" id="title_tag">
                 <option value="1" selected>div</option>
                 <option value="2">article</option>
                 <option value="3">section</option>
@@ -54,7 +54,7 @@
         </div>
         <div>
             <label for="">콘텐츠</label>
-            <select name="content_tag" id="">
+            <select name="content_tag" id="content_tag">
                 <option value="1" selected>div</option>
                 <option value="2">article</option>
                 <option value="3">section</option>
@@ -84,8 +84,8 @@
         <h2>수집한 데이터</h2>
         <form action="{% url 'delete_data'%}" method="POST">
             {% csrf_token %}
-            <button id="" type="button">모두선택</button>
-            <button id="all_checkbox" type="submit">삭제</button>
+            <button id="all_checkbox" type="button">모두선택</button>
+            <button id="delete" type="submit">삭제</button>
             <table class="g_table">
                 <thead>
                     <th>
@@ -116,9 +116,27 @@
                 </tbody>
             </table>
         </form>
-
-
     </div>
 </body>
+
+<script>
+    // 나중에 파일로 따로 보관 합니다
+
+    // 모두삭제 선택 기능
+    /*
+    1. id = "all_checkbox" 를 클릭한다
+    2.  name 이 pk 인 모든 checkbox 요소에 checked 가 되도록 조정한다
+    */
+    function selectAll() {
+        let checkboxes = document.getElementsByName("pk");
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = !checkbox.checked;
+        })
+    }
+    const select_all_button = document.getElementById("all_checkbox");
+    select_all_button.addEventListener('click', selectAll)
+
+    // 클릭할 요소 추가 기능
+</script>
 
 </html>
