@@ -13,7 +13,7 @@ from home.serializers import NewsSerializer
 # 홈 랜더
 # 크롤링 데이터를 보여준다ㄴㄴ
 def home(request):
-    datas = NewData.objects.all()
+    datas = NewData.objects.all().order_by("-pk")
     context={
         "datas" : datas
     }
@@ -38,21 +38,36 @@ def crawling(request):
             
             if response.status_code == 200:  # 정상 응답 반환 시 아래 코드블록 실행
                 soup = BeautifulSoup(response.content, 'html.parser')  # 응답 받은 HTML 파싱
-                # 지금은 클래스로만 찾아요
-                titles = soup.select(f'.{title_name}')
-                contents = soup.select(f'.{content_name}')
-                authors = soup.select(f'.{author_name}')
                 
+                # 이렇게 하면 .title01 을 찾든 #title01 를 찾든 상관이 없어져용
+                titles = soup.select(f'{title_name}')
+                contents = soup.select(f'{content_name}') # 없으면 빈 배열이 입력된다 
+                authors = soup.select(f'{author_name}')
+                # 배열에 값이 없을경우 채워넣을 것
+                no_datas = BeautifulSoup('<div></div>', 'html.parser')
+                # 빈배열일경우 처리
+                if contents == []:
+                    contents = [ no_datas for _ in titles] # title 의 개수만큼 공백을 채우겠다
+                    
+                if authors == []:
+                    authors = [ no_datas for _ in titles] # title 의 개수만큼 공백을 채우겠다
+                print("titles")
+                print(titles)
+                print("contents")
+                print(contents)
+                print("authors")
+                print(authors)
                 # 여기서 알고리즘 연습의 중요성을 느낍니다...
-                data_length = len(titles)
-                print("data_length")
-                print(data_length)
                 newData = []
-                for idx in range(data_length):
-                    newData.append(NewData(title = titles[idx].get_text(),
-                                           content = contents[idx].get_text(),
-                                           author = authors[idx].get_text(),
+             
+                # zip 을 이용해서 데이터를 엮어보자 
+                for title, content, author in zip(titles,contents,contents):
+                    newData.append(NewData(title = title.text,
+                                           content = content.text,
+                                           author = author.text,
                                            ))
+                    
+                    
                 if newData:
                     # 여러개의 데이터값을..넣으려고...해봤다...
                     NewData.objects.bulk_create(newData , batch_size=None, ignore_conflicts=False)

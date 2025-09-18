@@ -8,8 +8,9 @@
 </head>
 <style>
     .g_table {
-        width: 50%;
-        max-width: 800px;
+        width: 90%;
+        margin: 0 auto;
+        max-width: 1200px;
         border: 1px solid black;
     }
 
@@ -21,7 +22,7 @@
 <body>
     <form method="GET" action="{% url 'crawling' %}">
         <h1>찾을 class와 태그를 입력하세요</h1>
-        <p>현재는 클래스 이름으로만 찾을수있습니다.</p>
+        <p>div.title01 또는 title01 ... 이렇게 입력</p>
 
         <div>
             <label for="">url</label>
@@ -42,38 +43,38 @@
         </div>
         <div>
             <label for="">제목</label>
-            <select name="title_tag" id="title_tag">
+            <!-- <select name="title_tag" id="title_tag">
                 <option value="1" selected>div</option>
                 <option value="2">article</option>
                 <option value="3">section</option>
                 <option value="4">p</option>
                 <option value="5">a</option>
-            </select>
-            <input type="text" name="title" placeholder="제목 클래스이름" required>
+            </select> -->
+            <input type="text" name="title" placeholder="제목" required>
 
         </div>
         <div>
             <label for="">콘텐츠</label>
-            <select name="content_tag" id="content_tag">
+            <!-- <select name="content_tag" id="content_tag">
                 <option value="1" selected>div</option>
                 <option value="2">article</option>
                 <option value="3">section</option>
                 <option value="4">p</option>
                 <option value="5">a</option>
-            </select>
-            <input type="text" name="content" placeholder="콘텐츠 클래스이름">
+            </select> -->
+            <input type="text" name="content" placeholder="콘텐츠" required>
         </div>
 
         <div>
             <label for="">기자</label>
-            <select name="author_tag" id="author_tag">
+            <!-- <select name="author_tag" id="author_tag">
                 <option value="1" selected>div</option>
                 <option value="2">article</option>
                 <option value="3">section</option>
                 <option value="4">p</option>
                 <option value="5">a</option>
-            </select>
-            <input type="text" name="author" placeholder="기자 클래스이름">
+            </select> -->
+            <input type="text" name="author" placeholder="기자" required>
         </div>
 
         <button type="submit">찾아!!!!</button>
@@ -137,6 +138,9 @@
     select_all_button.addEventListener('click', selectAll)
 
     // 클릭할 요소 추가 기능
+    /*
+        1. 
+    */
 </script>
 
 </html>
